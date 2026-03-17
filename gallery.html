@@ -3,16 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <title>Gallery</title>
-  <style>body { background-color: #ffe8f7; font-family: Arial, sans-serif; padding: 24px; }</style>
+  <style>
+        .lightbox {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0,0,0,0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          transition: opacity 0.2s;
+        }
+        .lightbox.hidden {
+          display: none;
+        }
+        .lightbox img {
+          max-width: 90vw;
+          max-height: 80vh;
+          border-radius: 12px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+          background: #fff;
+          border: 4px solid #ffe0f7;
+          object-fit: contain;
+        }
+        .lightbox .close {
+          position: absolute;
+          top: 32px;
+          right: 48px;
+          font-size: 3rem;
+          color: #fff;
+          cursor: pointer;
+          z-index: 1100;
+          text-shadow: 0 2px 8px #a71b7b, 0 0 2px #fff;
+          user-select: none;
+          transition: color 0.2s;
+        }
+        .lightbox .close:hover {
+          color: #ffb3e6;
+        }
+    body {
+      background-color: #ffe0f7;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: #3f1f47;
+    }
+    .gallery-content {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin: 36px auto 24px auto;
+      padding: 32px 18px 24px 18px;
+      max-width: 1400px;
+      min-height: 80vh;
+      position: relative;
+    }
+    h1 {
+      font-size: 4rem;
+      font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+      color: #a71b7b;
+      margin: 0 0 10px 0;
+      text-align: center;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+      margin-top: 30px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 180px;
+      display: block;
+      object-fit: cover;
+      background: #fff;
+      border: 2px solid #ffe0f7;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin: 0;
+      padding: 0;
+      aspect-ratio: 1/1;
+      transition: box-shadow 0.2s;
+    }
+    .gallery-grid img:hover {
+      box-shadow: 0 4px 16px rgba(213,0,112,0.13);
+    }
+    .back-link {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      color: #d50070;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      background: #fff;
+      padding: 6px 14px 6px 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      z-index: 10;
+      border: 1px solid #ffe0f7;
+      transition: background 0.2s, color 0.2s;
+    }
+    .back-link:hover {
+      color: #ff1a9d;
+      background: #ffe0f7;
+    }
+  </style>
 </head>
 <body>
-  <h1>Gallery</h1>
-  <p>Explore some of our favorite finished cakes and cookie cakes.</p>
-  <ul>
-    <li>Cookie cake with buttercream flowers</li>
-    <li>Chocolate drip layer cake</li>
-    <li>Custom theme birthday cake</li>
-  </ul>
-  <a href="index.html">← Back to Home</a>
+  <div class="gallery-content">
+    <a class="back-link" href="index.html">← Back to Home</a>
+    <h1>Gallery</h1>
+    <p style="text-align:center;font-size:1.3rem;">Explore all our cookie cakes and other treats below.</p>
+    <div class="gallery-grid">
+      <!-- IMAGES WILL BE INSERTED HERE -->
+    </div>
+    <div id="lightbox" class="lightbox hidden" aria-hidden="true" role="dialog" aria-label="Image preview">
+      <span class="close" role="button" aria-label="Close">&times;</span>
+      <img id="lightbox-img" src="" alt="Expanded gallery image" />
+    </div>
+  </div>
+  <script>
+    const galleryFiles = [
+      'Gallery/IMG_6332.JPG', 'Gallery/IMG_6333.JPG', 'Gallery/IMG_6334.JPG', 'Gallery/IMG_6335.JPG',
+      'Gallery/IMG_6336.JPG', 'Gallery/IMG_6337.JPG', 'Gallery/IMG_6338.JPG', 'Gallery/IMG_6339.JPG',
+      'Gallery/IMG_6340.JPG', 'Gallery/IMG_6341.JPG', 'Gallery/IMG_6342.JPG', 'Gallery/IMG_6343.JPG',
+      'Gallery/IMG_6344.JPG', 'Gallery/IMG_6345.JPG', 'Gallery/IMG_6346.JPG', 'Gallery/IMG_6347.JPG',
+      'Gallery/IMG_6348.JPG', 'Gallery/IMG_6349.JPG', 'Gallery/IMG_6350.JPG', 'Gallery/IMG_6351.JPG',
+      'Gallery/IMG_6352.JPG', 'Gallery/IMG_6353.JPG', 'Gallery/IMG_6354.JPG', 'Gallery/IMG_6355.JPG',
+      'Gallery/IMG_6356.JPG', 'Gallery/IMG_6357.JPG', 'Gallery/IMG_6358.JPG', 'Gallery/IMG_6359.JPG',
+      'Gallery/IMG_6360.JPG', 'Gallery/IMG_6361.JPG', 'Gallery/IMG_6362.JPG', 'Gallery/IMG_6363.JPG',
+      'Gallery/IMG_6364.JPG', 'Gallery/IMG_6365.JPG', 'Gallery/IMG_6366.JPG', 'Gallery/IMG_6367.JPG',
+      'Gallery/IMG_6368.JPG', 'Gallery/IMG_6369.JPG', 'Gallery/IMG_6370.JPG', 'Gallery/IMG_6371.JPG',
+      'Gallery/IMG_6372.JPG', 'Gallery/IMG_6373.JPG', 'Gallery/IMG_6374.JPG', 'Gallery/IMG_6375.JPG',
+      'Gallery/IMG_6376.JPG', 'Gallery/IMG_6377.JPG', 'Gallery/IMG_6379.JPG', 'Gallery/IMG_6380.JPG',
+      'Gallery/IMG_6381.JPG', 'Gallery/IMG_6382.JPG', 'Gallery/IMG_6383.JPG', 'Gallery/IMG_6384.JPG',
+      'Gallery/IMG_6385.JPG', 'Gallery/IMG_6386.JPG', 'Gallery/IMG_6387.JPG', 'Gallery/IMG_6388.JPG',
+      'Gallery/IMG_6389.JPG', 'Gallery/IMG_6390.JPG', 'Gallery/IMG_6391.JPG', 'Gallery/IMG_6392.JPG',
+      'Gallery/IMG_6393.JPG', 'Gallery/IMG_6394.JPG', 'Gallery/IMG_6395.JPG', 'Gallery/IMG_6396.JPG',
+      'Gallery/IMG_6397.JPG', 'Gallery/IMG_6398.JPG', 'Gallery/IMG_6399.JPG', 'Gallery/IMG_6400.JPG',
+      'Gallery/IMG_6401.JPG', 'Gallery/IMG_6402.JPG', 'Gallery/IMG_6403.JPG', 'Gallery/IMG_6404.JPG',
+      'Gallery/IMG_6405.JPG', 'Gallery/IMG_6406.JPG', 'Gallery/IMG_6407.JPG', 'Gallery/IMG_6408.JPG'
+    ];
+    const grid = document.querySelector('.gallery-grid');
+
+    galleryFiles.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Gallery photo';
+      img.addEventListener('click', () => showLightbox(img.src, img.alt));
+      grid.appendChild(img);
+    });
+
+    // Lightbox logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox .close');
+
+    function showLightbox(src, alt) {
+      lightboxImage.src = src;
+      lightboxImage.alt = alt;
+      lightbox.classList.remove('hidden');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    closeBtn.addEventListener('click', hideLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox || event.target === lightboxImage) {
+        hideLightbox();
+      }
+    });
+  </script>
 </body>
 </html>

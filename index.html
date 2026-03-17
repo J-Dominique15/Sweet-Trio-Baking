@@ -2,34 +2,507 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Sweet Trio</title>
   <style>
+        /* Responsive improvements for mobile */
+        @media (max-width: 700px) {
+          .content {
+            padding: 10px 2vw 10px 2vw;
+            border-radius: 0;
+            width: 100vw;
+            min-width: 0;
+            box-shadow: none;
+          }
+          .content h1 {
+            font-size: 3.2rem;
+            padding-top: 10px;
+          }
+          #site-logo {
+            position: static !important;
+            display: block !important;
+            margin: 0 auto -40px auto !important;
+            width: 92vw !important;
+            max-width: 420px !important;
+            max-height: 44vw !important;
+            min-width: 180px !important;
+            min-height: 120px !important;
+            left: unset !important;
+            right: unset !important;
+            top: unset !important;
+            z-index: 1;
+          }
+          .main-title-block {
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+          }
+          .main-title-block h1, .main-title-block p {
+            margin-top: 0;
+            position: relative;
+            z-index: 2;
+            background: none;
+          }
+          .main-title-block p {
+            margin-top: -2.5em;
+            padding-top: 0;
+            background: none;
+          }
+          #site-logo-right {
+            display: none !important;
+          }
+          .content h1 {
+            margin-top: 0;
+          }
+          .content {
+            padding-top: 10px;
+          }
+          .page-links {
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+          }
+          .gallery-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+          }
+          .gallery-grid img {
+            height: 110px;
+            border-width: 2px;
+            padding: 2px;
+          }
+          .content p {
+            font-size: 1.1rem;
+          }
+          .squiggle {
+            width: 120px;
+            height: 12px;
+          }
+        }
+        @media (max-width: 400px) {
+          .content h1 {
+            font-size: 2.1rem;
+          }
+          .gallery-grid img {
+            height: 70px;
+          }
+        }
+        .lightbox {
+          /* Ensure overlay covers mobile viewport */
+          padding: 0 !important;
+          align-items: center;
+          justify-content: center;
+        }
+        .lightbox img {
+          max-width: 98vw;
+          max-height: 70vh;
+        }
+        .lightbox .close {
+          top: 8px;
+          right: 12px;
+          font-size: 2.2rem;
+        }
     body {
-      background-color: pink;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffe0f7;
+      color: #3f1f47;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      position: absolute;
+      top: 28px;
+      right: 10px;
+      z-index: 10;
+      padding: 8px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      border-radius: 10px;
+      border: 1px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    #menu-toggle {
+      font-size: 1.3rem;
+      background: #ff90cc;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    nav {
+      position: absolute;
+      top: 90px;
+      right: 10px;
+      background: #ffffff;
+      border: 1px solid #ffb6dc;
+      border-radius: 8px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      padding: 10px;
+      z-index: 20;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: block;
+      gap: 0;
+    }
+
+    nav li {
+      margin-bottom: 8px;
+    }
+
+    nav li:last-child {
+      margin-bottom: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #7f0f62;
+      font-weight: bold;
+      display: block;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background: #ffe1f2;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .content {
+      width: calc(100% - 36px);
+      margin: 20px auto;
+      padding: 16px;
+      background: #ffe8f5;
+      border: 1px solid #fff1fc;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: none;
+      text-align: center;
+    }
+
+    .content h1 {
+      margin: 0;
+      padding-top: 20px;
+      font-size: 8.5rem;
+      line-height: 1.05;
+      font-weight: 400;
+      font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+      color: #a71b7b;
+      text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.8);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    #site-logo,
+    #site-logo-right {
+      width: 180px;
+      max-height: 150px;
+      object-fit: contain;
+      margin: 0;
+      display: block;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      position: absolute;
+      top: 28px;
+      z-index: 20;
+    }
+
+    #site-logo {
+      left: 20px;
+    }
+
+    #site-logo-right {
+      right: 20px;
+    }
+
+    .content {
+      width: calc(100% - 36px);
+      margin: 20px auto;
+      padding: 40px 16px 20px;
+      background: #ffffff;
+      border: 1px solid #fff1fc;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: none;
+      text-align: center;
+      min-height: auto;
+    }
+
+    #gallery-slider {
+      min-height: 280px;
+      margin-top: 18px;
+    }
+
+    .page-links {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .page-links a {
+      color: #d50070;
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 1.15rem;
+      border-bottom: 2px solid #ffc1e0;
+      padding-bottom: 2px;
+    }
+
+    .page-links a:hover {
+      color: #ff1a9d;
+    }
+
+    .content p {
+      font-size: 1.8rem;
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-style: italic;
+      margin-top: 0.7rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.8px;
+    }
+
+    .squiggle {
+      display: block;
+      margin: 12px auto;
+      width: 240px;
+      height: 26px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="26" viewBox="0 0 240 26"><path fill="none" stroke="%23ff8ac5" stroke-width="3" d="M0,13 C24,7 36,23 60,17 C84,11 96,27 120,21 C144,15 156,31 180,25 C204,19 216,5 240,13" /></svg>');
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    .link-button {
+      background: #ff8fcb;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 250px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 10px;
+      border: 4px solid #ffeafa;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+
+    .gallery-grid img:hover {
+      border-color: #ffccd7;
+      transform: scale(1.03);
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 86%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      border: none;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.04);
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .lightbox.hidden {
+      display: none;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 86%;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      border: 3px solid #fff;
+    }
+
+    .lightbox .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-size: 2.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
 
 <body>
+  <header></header>
 
-  <h1>The Sweet Trio</h1>
+  <div class="content">
+    <div class="main-title-block">
+      <img id="site-logo" src="Logos/IMG_6409.JPG" alt="Sweet Trio logo" />
+      <h1>The Sweet Trio</h1>
+      <p>
+        Custom Cookie Cakes!<br>
+        <span class="line-break"></span>
+        Baking up joy for birthdays, milestones & all the sweet moments in between.<br>
+        <span class="line-break"></span>
+        Located in Elmore, OH.
+      </p>
+    </div>
+    <img id="site-logo-right" src="Logos/IMG_6409.JPG" alt="Sweet Trio logo" />
 
-  <p>Custom Cookie Cakes</p>
+    <div class="page-links" aria-label="In-page navigation links">
+      <a href="gallery.html">Gallery</a>
+      <a href="cake-options.html">Size/Pricing Options</a>
+      <a href="orders.html">Orders</a>
+    </div>
 
-  <nav>
-    <ul>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="cake-options.html">Cake Options</a></li>
-      <li><a href="orders.html">Orders</a></li>
-    </ul>
-  </nav>
+    <section id="gallery-slider" class="gallery-grid" aria-label="Featured gallery photos"></section>
+  </div>
 
-  <h2>Order Here</h2>
+  <div id="lightbox" class="lightbox hidden" aria-hidden="true" role="dialog" aria-label="Image preview">
+    <span class="close" role="button" aria-label="Close">&times;</span>
+    <img id="lightbox-img" src="" alt="Expanded gallery image" />
+  </div>
 
-  <p>Send us a message on Facebook to place an order</p>
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
 
-  <a href="https://facebook.com">Message us on Facebook</a>
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        nav.classList.toggle('hidden');
+      });
+    }
 
+    const galleryImages = [
+      'Gallery/IMG_6332.JPG', 'Gallery/IMG_6333.JPG', 'Gallery/IMG_6334.JPG', 'Gallery/IMG_6335.JPG',
+      'Gallery/IMG_6336.JPG', 'Gallery/IMG_6337.JPG', 'Gallery/IMG_6338.JPG', 'Gallery/IMG_6339.JPG',
+      'Gallery/IMG_6340.JPG', 'Gallery/IMG_6341.JPG', 'Gallery/IMG_6342.JPG', 'Gallery/IMG_6343.JPG',
+      'Gallery/IMG_6344.JPG', 'Gallery/IMG_6345.JPG', 'Gallery/IMG_6346.JPG', 'Gallery/IMG_6347.JPG',
+      'Gallery/IMG_6348.JPG', 'Gallery/IMG_6349.JPG', 'Gallery/IMG_6350.JPG', 'Gallery/IMG_6351.JPG',
+      'Gallery/IMG_6352.JPG', 'Gallery/IMG_6353.JPG', 'Gallery/IMG_6354.JPG', 'Gallery/IMG_6355.JPG',
+      'Gallery/IMG_6356.JPG', 'Gallery/IMG_6357.JPG', 'Gallery/IMG_6358.JPG', 'Gallery/IMG_6359.JPG',
+      'Gallery/IMG_6360.JPG', 'Gallery/IMG_6361.JPG', 'Gallery/IMG_6362.JPG', 'Gallery/IMG_6363.JPG',
+      'Gallery/IMG_6364.JPG', 'Gallery/IMG_6365.JPG', 'Gallery/IMG_6366.JPG', 'Gallery/IMG_6367.JPG',
+      'Gallery/IMG_6368.JPG', 'Gallery/IMG_6369.JPG', 'Gallery/IMG_6370.JPG', 'Gallery/IMG_6371.JPG',
+      'Gallery/IMG_6372.JPG', 'Gallery/IMG_6373.JPG', 'Gallery/IMG_6374.JPG', 'Gallery/IMG_6375.JPG',
+      'Gallery/IMG_6376.JPG', 'Gallery/IMG_6377.JPG', 'Gallery/IMG_6379.JPG', 'Gallery/IMG_6380.JPG',
+      'Gallery/IMG_6381.JPG', 'Gallery/IMG_6382.JPG', 'Gallery/IMG_6383.JPG', 'Gallery/IMG_6384.JPG',
+      'Gallery/IMG_6385.JPG', 'Gallery/IMG_6386.JPG', 'Gallery/IMG_6387.JPG', 'Gallery/IMG_6388.JPG',
+      'Gallery/IMG_6389.JPG', 'Gallery/IMG_6390.JPG', 'Gallery/IMG_6391.JPG', 'Gallery/IMG_6392.JPG',
+      'Gallery/IMG_6393.JPG', 'Gallery/IMG_6394.JPG', 'Gallery/IMG_6395.JPG', 'Gallery/IMG_6396.JPG',
+      'Gallery/IMG_6397.JPG', 'Gallery/IMG_6398.JPG', 'Gallery/IMG_6399.JPG', 'Gallery/IMG_6400.JPG',
+      'Gallery/IMG_6401.JPG', 'Gallery/IMG_6402.JPG', 'Gallery/IMG_6403.JPG', 'Gallery/IMG_6404.JPG',
+      'Gallery/IMG_6405.JPG', 'Gallery/IMG_6406.JPG', 'Gallery/IMG_6407.JPG', 'Gallery/IMG_6408.JPG'
+    ];
+
+    const slider = document.getElementById('gallery-slider');
+
+    function getRandomImages(count) {
+      const copy = [...galleryImages];
+      const selected = [];
+
+      for (let i = 0; i < count; i++) {
+        const randomIndex = Math.floor(Math.random() * copy.length);
+        selected.push(copy.splice(randomIndex, 1)[0]);
+      }
+
+      return selected;
+    }
+
+    function renderGallery() {
+      slider.style.opacity = '0';
+      slider.style.transition = 'opacity 0.5s ease-in-out';
+
+      setTimeout(() => {
+        slider.innerHTML = '';
+        // Show 3 images on mobile, 4 on desktop
+        const isMobile = window.matchMedia('(max-width: 700px)').matches;
+        const count = isMobile ? 3 : 4;
+        const selected = getRandomImages(count);
+
+        selected.forEach((src, index) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = `Cake gallery image ${index + 1}`;
+          img.style.opacity = '0';
+          img.style.transition = 'opacity 0.5s ease-in-out';
+          img.addEventListener('click', () => showLightbox(img.src, img.alt));
+          slider.appendChild(img);
+
+          requestAnimationFrame(() => {
+            img.style.opacity = '1';
+          });
+        });
+
+        slider.style.opacity = '1';
+      }, 500);
+    }
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox .close');
+
+    function showLightbox(src, alt) {
+      lightboxImage.src = src;
+      lightboxImage.alt = alt;
+      lightbox.classList.remove('hidden');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    closeBtn.addEventListener('click', hideLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox || event.target === lightboxImage) {
+        hideLightbox();
+      }
+    });
+
+    renderGallery();
+
+    setInterval(renderGallery, 5000);
+  </script>
 </body>
 
 </html>
