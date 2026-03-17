@@ -3,17 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <title>Cake Options</title>
-  <style>body { background-color: #fff0f5; font-family: Arial, sans-serif; padding: 24px; }</style>
+  <title>Size/Pricing Options</title>
+  <style>
+    body { background-color: #fff0f5; font-family: Arial, sans-serif; padding: 24px; margin: 0; }
+    h1 {
+      color: #a71b7b;
+      font-size: 3rem;
+      font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      margin: 0 0 18px 0;
+      text-align: center;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+    }
+    .back-link {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      color: #d50070;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      background: #fff;
+      padding: 6px 14px 6px 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      z-index: 10;
+      border: 1px solid #ffe0f7;
+      transition: background 0.2s, color 0.2s;
+    }
+    .back-link:hover {
+      color: #ff1a9d;
+      background: #ffe0f7;
+    }
+    body {
+      position: relative;
+      min-height: 100vh;
+    }
+    .pricing-images {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .pricing-images img {
+      max-width: 100%;
+      width: 48vw;
+      min-width: 220px;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      background: #fff;
+      border: 2px solid #ffe0f7;
+      margin-bottom: 0;
+      object-fit: contain;
+    }
+    @media (max-width: 800px) {
+      .pricing-images {
+        flex-direction: column;
+        gap: 32px;
+        align-items: stretch;
+        width: 100vw;
+        margin-left: -24px;
+        margin-right: -24px;
+      }
+      .pricing-images img {
+        width: 100vw;
+        min-width: 0;
+        max-width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        display: block;
+        border-radius: 0;
+        margin: 0;
+      }
+    }
+    a { color: #d50070; font-weight: bold; text-decoration: none; font-size: 1.1rem; }
+    a:hover { color: #ff1a9d; }
+  </style>
 </head>
 <body>
-  <h1>Cake Options</h1>
-  <p>Choose your cake style below:</p>
-  <ul>
-    <li>Vanilla sponge with buttercream</li>
-    <li>Chocolate fudge with ganache</li>
-    <li>Red velvet with cream cheese frosting</li>
-    <li>Cookie cake custom design</li>
-  </ul>
-  <a href="index.html">← Back to Home</a>
+  <a class="back-link" href="index.html">← Back to Home</a>
+  <h1>Size/Pricing Options</h1>
+  <div class="pricing-images">
+    <img src="Pricing/IMG_6410.JPG" alt="Size and Pricing Option 1" />
+    <img src="Pricing/IMG_6411.JPG" alt="Size and Pricing Option 2" />
+  </div>
 </body>
 </html>
