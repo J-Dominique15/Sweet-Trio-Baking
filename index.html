@@ -15,7 +15,7 @@
             box-shadow: none;
           }
           .content h1 {
-            font-size: 3.2rem;
+            font-size: 2.1rem;
             padding-top: 10px;
           }
           #site-logo {
@@ -37,9 +37,10 @@
             z-index: 2;
             margin-top: 0;
           }
-          .main-title-block h1, .main-title-block p {
-            margin-top: 0;
-            position: relative;
+              .content h1 {
+                font-size: 0.09rem;
+                padding-top: 8px;
+              }
             z-index: 2;
             background: none;
           }
@@ -81,7 +82,7 @@
         }
         @media (max-width: 400px) {
           .content h1 {
-            font-size: 2.1rem;
+            font-size: 0.7rem;
           }
           .gallery-grid img {
             height: 70px;
@@ -452,9 +453,9 @@
 
       setTimeout(() => {
         slider.innerHTML = '';
-        // Show 3 images on mobile, 4 on desktop
+        // Show 2 images on mobile, 4 on desktop
         const isMobile = window.matchMedia('(max-width: 700px)').matches;
-        const count = isMobile ? 3 : 4;
+        const count = isMobile ? 2 : 4;
         const selected = getRandomImages(count);
 
         selected.forEach((src, index) => {
