@@ -5,6 +5,66 @@
   <title>Cake Options</title>
   <title>Size/Pricing Options</title>
   <style>
+            .example-img {
+              width: 54px;
+              height: 54px;
+              object-fit: cover;
+              border-radius: 10px;
+              border: 2px solid #ffe0f7;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+              margin-left: 6px;
+              cursor: pointer;
+              transition: box-shadow 0.2s;
+            }
+            .example-img:hover {
+              box-shadow: 0 4px 16px rgba(213,0,112,0.13);
+            }
+            .lightbox {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100vw;
+              height: 100vh;
+              background: rgba(0,0,0,0.8);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              z-index: 1000;
+              transition: opacity 0.2s;
+            }
+            .lightbox.hidden {
+              display: none;
+            }
+            .lightbox img {
+              max-width: 92vw;
+              max-height: 88vh;
+              border-radius: 14px;
+              box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+              background: #fff;
+              border: 4px solid #ffe0f7;
+              object-fit: contain;
+            }
+            .lightbox .close {
+              position: absolute;
+              top: 32px;
+              right: 48px;
+              font-size: 3rem;
+              color: #fff;
+              cursor: pointer;
+              z-index: 1100;
+              text-shadow: 0 2px 8px #a71b7b, 0 0 2px #fff;
+              user-select: none;
+              transition: color 0.2s;
+            }
+            .lightbox .close:hover {
+              color: #ffb3e6;
+            }
+        .pricing-sublist {
+          margin: 0 0 0 18px;
+          padding: 0;
+          list-style: disc;
+          font-size: 1rem;
+        }
     body { background-color: #fff0f5; font-family: Arial, sans-serif; padding: 24px; margin: 0; }
     h1 {
       color: #a71b7b;
@@ -33,45 +93,85 @@
       border: 1px solid #ffe0f7;
       transition: background 0.2s, color 0.2s;
     }
-    .back-link:hover {
-      color: #ff1a9d;
+    .pricing-table {
+      width: 100%;
+      max-width: 900px;
+      margin: 36px auto 32px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      padding: 32px 18px 24px 18px;
+    }
+    .pricing-table h2 {
+      color: #a71b7b;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .pricing-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pricing-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+      font-size: 1.18rem;
+      border-bottom: 1px solid #ffe0f7;
+      padding-bottom: 12px;
+    }
+    .pricing-shape {
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffe0f7;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #a71b7b;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 2px solid #ffd6ef;
+      position: relative;
+    }
+    .pricing-shape.heart {
+      border: none;
+      background: none;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      box-shadow: none;
+    }
+    .pricing-shape.square {
+      border-radius: 12px;
       background: #ffe0f7;
     }
-    body {
-      position: relative;
-      min-height: 100vh;
+    .pricing-shape.rect {
+      border-radius: 10px;
+      background: #ffe0f7;
+      width: 70px;
+      height: 44px;
+      font-size: 0.95rem;
     }
-    .pricing-images {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      align-items: flex-start;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
+    .pricing-shape.special {
+      border-radius: 50%;
+      background: #fff6fa;
+      border: 2px dashed #ffd6ef;
+      color: #d50070;
+      font-size: 1.1rem;
     }
-    .pricing-images img {
-      max-width: 100%;
-      width: 48vw;
-      min-width: 220px;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
-      background: #fff;
-      border: 2px solid #ffe0f7;
-      margin-bottom: 0;
-      object-fit: contain;
+    .serves {
+      color: #7f0f62;
+      font-size: 0.98rem;
+      margin-left: 8px;
+      font-style: italic;
     }
-    @media (max-width: 800px) {
-      .pricing-images {
-        flex-direction: column;
-        gap: 32px;
-        align-items: stretch;
-        width: 100vw;
-        margin-left: -24px;
-        margin-right: -24px;
-      }
-      .pricing-images img {
-        width: 100vw;
-        min-width: 0;
         max-width: 100vw;
         height: 100vh;
         object-fit: cover;
@@ -85,11 +185,93 @@
   </style>
 </head>
 <body>
+    <div id="lightbox" class="lightbox hidden" aria-hidden="true" role="dialog" aria-label="Image preview">
+      <span class="close" role="button" aria-label="Close">&times;</span>
+      <img id="lightbox-img" src="" alt="Expanded example image" />
+    </div>
   <a class="back-link" href="index.html">← Back to Home</a>
   <h1>Size/Pricing Options</h1>
-  <div class="pricing-images">
-    <img src="Pricing/IMG_6410.JPG" alt="Size and Pricing Option 1" />
-    <img src="Pricing/IMG_6411.JPG" alt="Size and Pricing Option 2" />
+  <div class="pricing-table">
+    <h2>Cookie Cake Sizes & Pricing</h2>
+    <ul class="pricing-list">
+      <li class="pricing-item"><span class="pricing-shape">6"</span>6" Round
+        <img class="example-img" src="Gallery/IMG_6363.JPG" alt="6 inch round example" onclick="showLightbox('Gallery/IMG_6363.JPG', '6 inch round example')" />
+        <ul class="pricing-sublist">
+          <li>$25 (Single layer)</li>
+          <li>$35 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape">9"</span>9" Round
+        <img class="example-img" src="Gallery/IMG_6380.JPG" alt="9 inch round example" onclick="showLightbox('Gallery/IMG_6380.JPG', '9 inch round example')" />
+        <ul class="pricing-sublist">
+          <li>$40 (Single layer)</li>
+          <li>$50 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape">12"</span>12" Round
+        <img class="example-img" src="Gallery/IMG_6347.JPG" alt="12 inch round example" onclick="showLightbox('Gallery/IMG_6347.JPG', '12 inch round example')" />
+        <ul class="pricing-sublist">
+          <li>$55 (Single layer)</li>
+          <li>$65 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape heart">♥</span>9" Heart
+        <img class="example-img" src="Gallery/IMG_6344.JPG" alt="9 inch heart example" onclick="showLightbox('Gallery/IMG_6344.JPG', '9 inch heart example')" />
+        <ul class="pricing-sublist">
+          <li>$40 (Single layer)</li>
+          <li>$50 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape square">8x8</span>8x8" Small Square <span class="serves">(feeds 8-10)</span>
+        <ul class="pricing-sublist">
+          <li>$40 (Single layer)</li>
+          <li>$50 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape rect">8x12</span>8x12" Medium Rectangle <span class="serves">(feeds up to 20)</span>
+        <img class="example-img" src="Gallery/IMG_6393.JPG" alt="8x12 rectangle example" onclick="showLightbox('Gallery/IMG_6393.JPG', '8x12 rectangle example')" />
+        <ul class="pricing-sublist">
+          <li>$55 (Single layer)</li>
+          <li>$65 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape rect">12x17</span>12x17" Large Rectangle <span class="serves">(feeds up to 45)</span>
+        <img class="example-img" src="Gallery/IMG_6385.JPG" alt="12x17 rectangle example" onclick="showLightbox('Gallery/IMG_6385.JPG', '12x17 rectangle example')" />
+        <ul class="pricing-sublist">
+          <li>$70 (Single layer)</li>
+          <li>$90 (Double layer)</li>
+        </ul>
+      </li>
+      <li class="pricing-item"><span class="pricing-shape special">4"</span>4" Specialty Round Cookie Cake &mdash; $7 each or 4/$25
+        <img class="example-img" src="Gallery/IMG_6358.JPG" alt="4 inch specialty example" onclick="showLightbox('Gallery/IMG_6358.JPG', '4 inch specialty example')" />
+      </li>
+      <li class="pricing-item"><span class="pricing-shape special">C</span>2 Dozen Decorated Mini Cookie Cups &mdash; $35
+        <img class="example-img" src="Gallery/IMG_6339.JPG" alt="Decorated mini cookie cups example" onclick="showLightbox('Gallery/IMG_6339.JPG', 'Decorated mini cookie cups example')" />
+      </li>
+    </ul>
   </div>
 </body>
+<script>
+  function showLightbox(src, alt) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.classList.remove('hidden');
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+  function hideLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightbox.classList.add('hidden');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImg.src = '';
+  }
+  document.querySelector('.lightbox .close').addEventListener('click', hideLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(event) {
+    if (event.target === this || event.target === document.getElementById('lightbox-img')) {
+      hideLightbox();
+    }
+  });
+</script>
 </html>
